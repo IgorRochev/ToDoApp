@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/widgets/finished_to_do_list/finished_to_do_list_widget.dart';
+// import 'package:todo_list_app/widgets/finished_to_do_list/finished_to_do_list_widget.dart';
 import 'package:todo_list_app/widgets/to_do_list/to_do_list_widget.dart';
 
 class MainWidget extends StatefulWidget {
   const MainWidget({super.key});
-
-  static List<Widget> _widgetOptions = <Widget>[
-    ToDoListWidget(),
-    FinishedToDoListWidget(),
-  ];
 
   @override
   State<MainWidget> createState() => _MainWidgetState();
 }
 
 class _MainWidgetState extends State<MainWidget> {
-  int _selectedIndex = 0;
-
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 1) {
+      Navigator.of(context).pushNamed('/completed');
+    }
   }
 
   @override
@@ -29,7 +22,7 @@ class _MainWidgetState extends State<MainWidget> {
       bottomNavigationBar: SizedBox(
         height: 68,
         child: BottomNavigationBar(
-            currentIndex: _selectedIndex,
+            currentIndex: 0,
             onTap: _onItemTapped,
             selectedItemColor: Color(0xFF9395D3),
             unselectedItemColor: Color(0xff8B8787),
@@ -52,7 +45,7 @@ class _MainWidgetState extends State<MainWidget> {
         ),
         backgroundColor: Color(0xFF9395D3),
       ),
-      body: MainWidget._widgetOptions.elementAt(_selectedIndex),
+      body: ToDoListWidget(),
     );
   }
 }

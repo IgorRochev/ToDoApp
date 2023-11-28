@@ -12,6 +12,7 @@ class ToDoListWidget extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.only(right: 10, left: 4, bottom: 21),
               child: Container(
+                height: 82,
                 decoration: BoxDecoration(
                   color: Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(15),
@@ -32,6 +33,7 @@ class ToDoListWidget extends StatelessWidget {
                       Flexible(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               "TODO TITLE",

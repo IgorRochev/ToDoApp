@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/widgets/finished_to_do_list/finished_to_do_list_widget.dart';
 import 'package:todo_list_app/widgets/main/edit_task/edit_task_widget.dart';
 
 import 'widgets/main/main_widget.dart';
@@ -22,6 +23,7 @@ class ToDoApp extends StatelessWidget {
         '/main': (context) => const MainWidget(),
         '/main/add_task': (context) => const AddTaskWidget(),
         '/main/edit_task': (context) => const EditTaskWidget(),
+        '/completed': (context) => const FinishedToDoListWidget(),
       },
       initialRoute: '/main',
     );
