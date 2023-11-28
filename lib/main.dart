@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/widgets/main/edit_task/edit_task_widget.dart';
 
 import 'widgets/main/main_widget.dart';
 import 'widgets/main/add_task/add_task_widget.dart';
@@ -20,6 +21,7 @@ class ToDoApp extends StatelessWidget {
       routes: {
         '/main': (context) => const MainWidget(),
         '/main/add_task': (context) => const AddTaskWidget(),
+        '/main/edit_task': (context) => const EditTaskWidget(),
       },
       initialRoute: '/main',
     );

@@ -62,7 +62,9 @@ class ToDoListWidget extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                              onPressed: null,
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/main/edit_task');
+                              },
                               icon: Icon(
                                 Icons.mode_edit_outline_outlined,
                                 size: 25,
