@@ -87,7 +87,9 @@ class ToDoListWidget extends StatelessWidget {
         ),
         IconButton(
             iconSize: 70,
-            onPressed: () => {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/main/add_task');
+            },
             icon: Icon(
               Icons.add_circle_outlined,
               color: Color(0xFF9395D3),
