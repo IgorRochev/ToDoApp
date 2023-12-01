@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/widgets/to_do_subtitle/to_do_subtitle_widget.dart';
+import 'package:todo_list_app/widgets/to_do_title/to_do_title_widget.dart';
 
 class FinishedToDoListWidget extends StatelessWidget {
   const FinishedToDoListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 74,
-        title: Text("Completed Task"),
-        titleTextStyle: TextStyle(
-          fontSize: 24,
-          fontFamily: "Jost",
-          fontWeight: FontWeight.w600,
-        ),
-        backgroundColor: Color(0xFF9395D3),
-      ),
-      backgroundColor: Color(0xFFD6D7EF),
-      body: ListView.builder(
+    return Container(
+      color: Color(0xFFD6D7EF),
+      child: ListView.builder(
         padding: EdgeInsets.only(top: 21),
         itemBuilder: (BuildContext context, int index) {
           return Padding(
@@ -38,33 +30,20 @@ class FinishedToDoListWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(
                     left: 18, right: 25, top: 15, bottom: 15),
-                child: Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "TODO TITLE",
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF9395D3),
-                          fontFamily: "Jost",
-                        ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ToDoTitleWidget(),
+                          ToDoSubtitleWidget(),
+                        ],
                       ),
-                      Text(
-                        "TODO SUBTITLE",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Jost",
-                          color: Color(0xFF000000),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

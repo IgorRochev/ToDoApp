@@ -20,4 +20,4 @@ flutter:
   fonts:
   - family: Jost
     fonts:
-      - asset: styles/fonts/Jost.ttf
+      - asset: lib/styles/fonts/Jost.ttf
