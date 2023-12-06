@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
 import 'package:todo_list_app/styles/theme/button_styles.dart';
+import 'package:todo_list_app/widgets/main_widget.dart';
 import 'package:todo_list_app/widgets/to_do_list/detail_text_field/detail_text_field_widget.dart';
 import 'package:todo_list_app/widgets/to_do_list/title_text_field/title_text_filed_widget.dart';
+import 'package:provider/provider.dart';
 
-class AddTaskWidget extends StatelessWidget {
+class AddTaskWidget extends StatefulWidget {
   const AddTaskWidget({super.key});
 
+  @override
+  State<AddTaskWidget> createState() => _AddTaskWidgetState();
+}
+
+class _AddTaskWidgetState extends State<AddTaskWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,17 +61,23 @@ class AddTaskWidget extends StatelessWidget {
   }
 }
 
-class AddButtonWidget extends StatelessWidget {
+class AddButtonWidget extends StatefulWidget {
   const AddButtonWidget({
     super.key,
   });
 
   @override
+  State<AddButtonWidget> createState() => _AddButtonWidgetState();
+}
+
+class _AddButtonWidgetState extends State<AddButtonWidget> {
+  @override
   Widget build(BuildContext context) {
+    final onPressed = context.read<Model>();
     return TextButton(
-        onPressed: () => {},
+        onPressed: () => {onPressed.addTask(context)},
         child: Text(
-          "ADD",
+          "add task",
           style: TextStyle(color: Color(0xFFFFFFFF)),
         ),
         style: ButtonStyle(

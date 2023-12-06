@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ToDoSubtitleWidget extends StatelessWidget {
+  final String subtitle;
+
   const ToDoSubtitleWidget({
     super.key,
+    required this.subtitle,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      "TODO SUBTITLE",
+    return Text(
+      subtitle,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(

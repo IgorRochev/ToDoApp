@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
+import 'package:todo_list_app/widgets/main_widget.dart';
 import 'package:todo_list_app/widgets/to_do_subtitle/to_do_subtitle_widget.dart';
 import 'package:todo_list_app/widgets/to_do_title/to_do_title_widget.dart';
-// import 'package:todo_list_app/styles/theme/task_decoration.dart';
 
 class ToDoListWidget extends StatelessWidget {
   @override
@@ -36,9 +37,12 @@ class TasksListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final box1 = context.watch<Model>().box.values;
     return ListView.builder(
+      itemCount: box1.length,
       padding: EdgeInsets.only(top: 21),
       itemBuilder: (BuildContext context, int index) {
+        final ActiveTasks = box1.elementAt(index);
         return Padding(
           padding: const EdgeInsets.only(right: 10, left: 4, bottom: 21),
           child: Container(
@@ -54,7 +58,14 @@ class TasksListWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [ToDoTitleWidget(), ToDoSubtitleWidget()],
+                      children: [
+                        ToDoTitleWidget(
+                          title: ActiveTasks.title,
+                        ),
+                        ToDoSubtitleWidget(
+                          subtitle: ActiveTasks.subtitle,
+                        )
+                      ],
                     ),
                   ),
                   SizedBox(

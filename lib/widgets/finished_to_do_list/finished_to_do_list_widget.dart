@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/widgets/to_do_subtitle/to_do_subtitle_widget.dart';
-import 'package:todo_list_app/widgets/to_do_title/to_do_title_widget.dart';
 
 class FinishedToDoListWidget extends StatelessWidget {
   const FinishedToDoListWidget({super.key});
@@ -38,8 +36,8 @@ class FinishedToDoListWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ToDoTitleWidget(),
-                          ToDoSubtitleWidget(),
+                          // ToDoTitleWidget(),
+                          // ToDoSubtitleWidget(),
                         ],
                       ),
                     ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
 import 'package:todo_list_app/styles/theme/button_styles.dart';
 import 'package:todo_list_app/widgets/to_do_list/detail_text_field/detail_text_field_widget.dart';
-import 'package:todo_list_app/widgets/to_do_list/title_text_field/title_text_filed_widget.dart';
 
 class EditTaskWidget extends StatelessWidget {
   const EditTaskWidget({super.key});
@@ -25,7 +24,7 @@ class EditTaskWidget extends StatelessWidget {
               padding: EdgeInsets.only(left: 30, right: 30),
               child: SizedBox(
                 // height: 29,
-                child: TitleTextFiledWidget(),
+                child: Placeholder(),
               ),
             ),
             SizedBox(
