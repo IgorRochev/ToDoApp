@@ -10,7 +10,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
-  await Hive.openBox("ActivesTasks3");
+  await Hive.openBox('ActivesTasks4');
+  await Hive.openBox('FinishedTasks');
   runApp(const ToDoApp());
 }
 
@@ -35,7 +36,7 @@ class ToDoApp extends StatelessWidget {
         ),
         routes: {
           '/main': (context) => const MainWidget(),
-          '/main/add_task': (context) => AddTaskWidget(),
+          '/main/add_task': (context) => const AddTaskWidget(),
           '/main/edit_task': (context) => const EditTaskWidget(),
           '/completed': (context) => const FinishedToDoListWidget(),
         },

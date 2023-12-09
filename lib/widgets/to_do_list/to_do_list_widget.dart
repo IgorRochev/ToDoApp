@@ -6,6 +6,8 @@ import 'package:todo_list_app/widgets/to_do_subtitle/to_do_subtitle_widget.dart'
 import 'package:todo_list_app/widgets/to_do_title/to_do_title_widget.dart';
 
 class ToDoListWidget extends StatelessWidget {
+  const ToDoListWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,11 +20,16 @@ class ToDoListWidget extends StatelessWidget {
   }
 }
 
-class TasksListWidget extends StatelessWidget {
+class TasksListWidget extends StatefulWidget {
   TasksListWidget({
     super.key,
   });
 
+  @override
+  State<TasksListWidget> createState() => _TasksListWidgetState();
+}
+
+class _TasksListWidgetState extends State<TasksListWidget> {
   final TaskDecoration = BoxDecoration(
     color: Color(0xFFFFFFFF),
     borderRadius: BorderRadius.circular(15),
@@ -37,7 +44,7 @@ class TasksListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final box1 = context.watch<Model>().box.values;
+    final box1 = context.watch<Model>().ActivesTasks.values;
     return ListView.builder(
       itemCount: box1.length,
       padding: EdgeInsets.only(top: 21),
@@ -72,7 +79,14 @@ class TasksListWidget extends StatelessWidget {
                     width: 5,
                   ),
                   Row(
-                    children: [EditTaskButtonWidget(), CloseTaskButtonWidget()],
+                    children: [
+                      EditTaskButtonWidget(
+                        index: index,
+                      ),
+                      CloseTaskButtonWidget(
+                        index: index,
+                      )
+                    ],
                   ),
                 ],
               ),
@@ -104,15 +118,17 @@ class AddTaskButtonWidget extends StatelessWidget {
 }
 
 class CloseTaskButtonWidget extends StatelessWidget {
-  const CloseTaskButtonWidget({
+  CloseTaskButtonWidget({
     super.key,
+    this.index,
   });
+  final index;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
         color: AppColors.LightPurple,
-        onPressed: null,
+        onPressed: () => context.read<Model>().closeTask(index),
         icon: Icon(
           Icons.check_circle_outline_outlined,
           size: 25,
@@ -121,16 +137,24 @@ class CloseTaskButtonWidget extends StatelessWidget {
   }
 }
 
-class EditTaskButtonWidget extends StatelessWidget {
+class EditTaskButtonWidget extends StatefulWidget {
   const EditTaskButtonWidget({
     super.key,
+    this.index,
   });
+  final index;
 
+  @override
+  State<EditTaskButtonWidget> createState() => _EditTaskButtonWidgetState();
+}
+
+class _EditTaskButtonWidgetState extends State<EditTaskButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/main/edit_task');
+          Navigator.pushNamed(context, '/main/edit_task',
+              arguments: widget.index);
         },
         icon: Icon(
           Icons.mode_edit_outline_outlined,

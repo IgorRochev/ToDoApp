@@ -13,7 +13,7 @@ class ToDoTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w600,
         color: AppColors.DarkPurple,

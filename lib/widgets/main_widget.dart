@@ -47,13 +47,17 @@ class _MainWidgetState extends State<MainWidget> {
         titleSpacing: 20,
         title: const Text("TODO APP"),
       ),
-      body: MainWidget._widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: MainWidget._widgetOptions,
+      ),
     );
   }
 }
 
 class Model extends ChangeNotifier {
-  var box = Hive.box('ActivesTasks3');
+  var ActivesTasks = Hive.box('ActivesTasks4');
+  var FinishedTasks = Hive.box('FinishedTasks');
   String title;
   String? subtitle;
 
@@ -61,16 +65,32 @@ class Model extends ChangeNotifier {
 
   void addTask(BuildContext context) async {
     final task = Task(title, subtitle);
-    await box.add(task);
+    await ActivesTasks.add(task);
     notifyListeners();
     if (context.mounted) {
       Navigator.of(context).pop();
     }
   }
+
+  void updateTask(BuildContext context, int index) async {
+    ActivesTasks.putAt(index, Task(title, subtitle));
+    notifyListeners();
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  void closeTask(int index) {
+    Task task = ActivesTasks.getAt(index);
+    FinishedTasks.add(task);
+    ActivesTasks.deleteAt(index);
+    print(ActivesTasks);
+    notifyListeners();
+  }
 }
 
 @HiveType(typeId: 0)
-class Task extends HiveObject {
+class Task {
   @HiveField(0)
   String title;
 
