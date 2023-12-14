@@ -69,9 +69,9 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                         ToDoTitleWidget(
                           title: ActiveTasks.title,
                         ),
-                        ToDoSubtitleWidget(
-                          subtitle: ActiveTasks.subtitle,
-                        )
+                        // ToDoSubtitleWidget(
+                        //   subtitle: ActiveTasks.subtitle,
+                        // )
                       ],
                     ),
                   ),

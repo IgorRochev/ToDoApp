@@ -56,17 +56,28 @@ class _MainWidgetState extends State<MainWidget> {
 }
 
 class Model extends ChangeNotifier {
-  var ActivesTasks = Hive.box('ActivesTasks4');
-  var FinishedTasks = Hive.box('FinishedTasks');
+  var ActivesTasks = Hive.box('ActivesTasks5');
+  var FinishedTasks = Hive.box('FinishedTasks1');
   String title;
   String? subtitle;
+  bool validate = false;
 
-  Model({required this.title, this.subtitle});
+  Model({
+    required this.title,
+    this.subtitle,
+    required this.validate,
+  });
+
+  void isValidate() {
+    notifyListeners();
+  }
 
   void addTask(BuildContext context) async {
     final task = Task(title, subtitle);
     await ActivesTasks.add(task);
     notifyListeners();
+    title = '';
+    subtitle = null;
     if (context.mounted) {
       Navigator.of(context).pop();
     }
@@ -75,6 +86,8 @@ class Model extends ChangeNotifier {
   void updateTask(BuildContext context, int index) async {
     ActivesTasks.putAt(index, Task(title, subtitle));
     notifyListeners();
+    title = '';
+    subtitle = null;
     if (context.mounted) {
       Navigator.of(context).pop();
     }
@@ -84,8 +97,9 @@ class Model extends ChangeNotifier {
     Task task = ActivesTasks.getAt(index);
     FinishedTasks.add(task);
     ActivesTasks.deleteAt(index);
-    print(ActivesTasks);
     notifyListeners();
+    title = '';
+    subtitle = null;
   }
 }
 

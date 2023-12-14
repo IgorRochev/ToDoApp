@@ -10,8 +10,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
-  await Hive.openBox('ActivesTasks4');
-  await Hive.openBox('FinishedTasks');
+  await Hive.openBox('ActivesTasks5');
+  await Hive.openBox('FinishedTasks1');
   runApp(const ToDoApp());
 }
 
@@ -21,7 +21,7 @@ class ToDoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => Model(title: ''),
+      create: (context) => Model(title: '', subtitle: null, validate: false),
       child: MaterialApp(
         title: 'To Do App',
         theme: ThemeData(

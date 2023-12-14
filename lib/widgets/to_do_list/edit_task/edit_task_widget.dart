@@ -17,8 +17,10 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller1
-        .addListener(() => context.read<Model>().title = controller1.text);
+    controller1.addListener(() {
+      context.read<Model>().title = controller1.text;
+      context.read<Model>().validate = controller1.text.isEmpty;
+    });
     controller2
         .addListener(() => context.read<Model>().subtitle = controller2.text);
     setState(() {});
@@ -26,11 +28,13 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // print(1);
     int index = ModalRoute.of(context)!.settings.arguments as int;
     final box1 = context.read<Model>().ActivesTasks.values;
     final ActiveTasks = box1.elementAt(index);
     controller1.text = ActiveTasks.title;
     controller2.text = ActiveTasks.subtitle;
+    bool validator = context.read<Model>().validate;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Task"),
@@ -49,9 +53,9 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                 // height: 29,
                 child: TextField(
                   controller: controller1,
-                  onChanged: null,
                   cursorColor: Color(0xFF8B8787),
                   decoration: InputDecoration(
+                    errorText: validator ? "Value Can't Be Empty" : null,
                     labelStyle: TextStyle(color: Color(0xFF8B8787)),
                     enabledBorder: UnderlineInputBorder(
                         borderSide:
@@ -100,8 +104,9 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                     child: Container(
                       height: 65,
                       child: UpdateButtonWidget(
-                        index: index,
-                      ),
+                          index: index,
+                          validate: validator,
+                          controller: controller1),
                     ),
                   ),
                   SizedBox(
@@ -146,18 +151,38 @@ class CancelButtonWidget extends StatelessWidget {
   }
 }
 
-class UpdateButtonWidget extends StatelessWidget {
+class UpdateButtonWidget extends StatefulWidget {
   final index;
-  const UpdateButtonWidget({
+  bool validate;
+  var controller;
+  UpdateButtonWidget({
     super.key,
     this.index,
+    required this.validate,
+    this.controller,
   });
 
+  @override
+  State<UpdateButtonWidget> createState() => _UpdateButtonWidgetState();
+}
+
+class _UpdateButtonWidgetState extends State<UpdateButtonWidget> {
   @override
   Widget build(BuildContext context) {
     final onPressed = context.read<Model>();
     return TextButton(
-        onPressed: () => {onPressed.updateTask(context, index)},
+        onPressed: () {
+          context.read<Model>().isValidate();
+
+          if (!context.read<Model>().validate) {
+            // print(context.read<Model>().validate);
+            onPressed.updateTask(
+              context,
+              widget.index,
+            );
+          }
+          ;
+        },
         style: ButtonStyle(
             textStyle: ButtonsStyles.EditTaskButtonsTextStyle,
             backgroundColor: MaterialStatePropertyAll(AppColors.DarkPurple),

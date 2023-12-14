@@ -6,7 +6,7 @@ class TitleTextFiledWidget extends StatelessWidget {
   const TitleTextFiledWidget({
     super.key,
   });
-
+  // bool _validate = false;
   @override
   Widget build(BuildContext context) {
     return TextField(
