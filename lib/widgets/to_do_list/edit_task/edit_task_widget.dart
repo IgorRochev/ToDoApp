@@ -14,6 +14,7 @@ class EditTaskWidget extends StatefulWidget {
 class _EditTaskWidgetState extends State<EditTaskWidget> {
   final controller1 = TextEditingController();
   final controller2 = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -38,86 +39,84 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
       backgroundColor: Color(0xFFFFFFFF),
       body: Container(
         alignment: Alignment.center,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 30, right: 30),
-              child: SizedBox(
-                // height: 29,
-                child: TextField(
-                  controller: controller1,
-                  onChanged: null,
-                  cursorColor: Color(0xFF8B8787),
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Color(0xFF8B8787)),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFF8B8787), width: 1)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFF8B8787), width: 1)),
-                    label: Text("Title"),
+        child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  child: TextFormField(
+                    controller: controller1,
+                    decoration: InputDecoration(
+                      label: Text("Title"),
+                      labelStyle: TextStyle(color: Color(0xFF8B8787)),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF8B8787), width: 1)),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF8B8787), width: 1)),
+                    ),
+                    validator: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'Text is empty';
+                      }
+                      return null;
+                    },
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 30, right: 30),
-              child: SizedBox(
-                // height: 29,
-                child: TextField(
-                  controller: controller2,
-                  onChanged: null,
-                  cursorColor: Color(0xFF8B8787),
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Color(0xFF8B8787)),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFF8B8787), width: 1)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFF8B8787), width: 1)),
-                    label: Text("Detail"),
+                SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  child: TextFormField(
+                    controller: controller2,
+                    decoration: InputDecoration(
+                        label: Text("Detail"),
+                        labelStyle: TextStyle(color: Color(0xFF8B8787)),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Color(0xFF8B8787), width: 1)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xFF8B8787), width: 1))),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 54,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 14, right: 14),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 65,
-                      child: UpdateButtonWidget(
-                        index: index,
+                SizedBox(
+                  height: 54,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 14, right: 14),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 65,
+                          child: UpdateButtonWidget(
+                            index: index,
+                            formkey: _formKey,
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 46,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 65,
+                          child: CancelButtonWidget(),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 46,
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 65,
-                      child: CancelButtonWidget(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+                ),
+              ],
+            )),
       ),
     );
   }
@@ -148,16 +147,22 @@ class CancelButtonWidget extends StatelessWidget {
 
 class UpdateButtonWidget extends StatelessWidget {
   final index;
+  final formkey;
   const UpdateButtonWidget({
     super.key,
     this.index,
+    this.formkey,
   });
 
   @override
   Widget build(BuildContext context) {
     final onPressed = context.read<Model>();
     return TextButton(
-        onPressed: () => {onPressed.updateTask(context, index)},
+        onPressed: () {
+          if (formkey.currentState.validate()) {
+            onPressed.updateTask(context, index);
+          }
+        },
         style: ButtonStyle(
             textStyle: ButtonsStyles.EditTaskButtonsTextStyle,
             backgroundColor: MaterialStatePropertyAll(AppColors.DarkPurple),
