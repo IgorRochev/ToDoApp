@@ -10,8 +10,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
-  await Hive.openBox('ActivesTasks5');
-  await Hive.openBox('FinishedTasks1');
+  await Hive.openBox('ActivesTasks9');
+  await Hive.openBox('FinishedTasks5');
   runApp(const ToDoApp());
 }
 

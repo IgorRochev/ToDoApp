@@ -56,8 +56,8 @@ class _MainWidgetState extends State<MainWidget> {
 }
 
 class Model extends ChangeNotifier {
-  var ActivesTasks = Hive.box('ActivesTasks5');
-  var FinishedTasks = Hive.box('FinishedTasks1');
+  var ActivesTasks = Hive.box('ActivesTasks9');
+  var FinishedTasks = Hive.box('FinishedTasks5');
   String title;
   String? subtitle;
 
@@ -85,6 +85,11 @@ class Model extends ChangeNotifier {
     FinishedTasks.add(task);
     ActivesTasks.deleteAt(index);
     print(ActivesTasks);
+    notifyListeners();
+  }
+
+  void deleteTask(int index) {
+    ActivesTasks.deleteAt(index);
     notifyListeners();
   }
 }

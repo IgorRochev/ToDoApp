@@ -14,6 +14,7 @@ class AddTaskWidget extends StatefulWidget {
 }
 
 class _AddTaskWidgetState extends State<AddTaskWidget> {
+  final _formKey1 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,59 +24,88 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       backgroundColor: Color(0xFFFFFFFF),
       body: Container(
         alignment: Alignment.center,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 30, right: 30),
-              child: SizedBox(
-                // height: 29,
-                child: TitleTextFiledWidget(),
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 30, right: 30),
-              child: SizedBox(
-                // height: 29,
-                child: DetailTextFieldWidget(),
-              ),
-            ),
-            SizedBox(
-              height: 54,
-            ),
-            Container(
-              width: double.infinity,
-              height: 65,
-              padding: EdgeInsets.only(left: 14, right: 14),
-              child: AddButtonWidget(),
-            ),
-          ],
-        ),
+        child: Form(
+            key: _formKey1,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  child: TextFormField(
+                    onChanged: (value) => {context.read<Model>().title = value},
+                    decoration: InputDecoration(
+                      label: Text("Title"),
+                      labelStyle: TextStyle(color: Color(0xFF8B8787)),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF8B8787), width: 1)),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF8B8787), width: 1)),
+                    ),
+                    validator: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'Text is empty';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  child: TextFormField(
+                    onChanged: (value) =>
+                        {context.read<Model>().subtitle = value},
+                    decoration: InputDecoration(
+                        label: Text("Detail"),
+                        labelStyle: TextStyle(color: Color(0xFF8B8787)),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Color(0xFF8B8787), width: 1)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xFF8B8787), width: 1))),
+                  ),
+                ),
+                SizedBox(
+                  height: 54,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 65,
+                  padding: EdgeInsets.only(left: 14, right: 14),
+                  child: AddButtonWidget(
+                    formkey: _formKey1,
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
 }
 
-class AddButtonWidget extends StatefulWidget {
+class AddButtonWidget extends StatelessWidget {
+  final formkey;
   const AddButtonWidget({
     super.key,
+    this.formkey,
   });
 
-  @override
-  State<AddButtonWidget> createState() => _AddButtonWidgetState();
-}
-
-class _AddButtonWidgetState extends State<AddButtonWidget> {
   @override
   Widget build(BuildContext context) {
     final onPressed = context.read<Model>();
     return TextButton(
-        onPressed: () => {onPressed.addTask(context)},
+        onPressed: () {
+          if (formkey.currentState.validate()) {
+            onPressed.addTask(context);
+          }
+        },
         child: Text(
           "add task",
           style: TextStyle(color: Color(0xFFFFFFFF)),

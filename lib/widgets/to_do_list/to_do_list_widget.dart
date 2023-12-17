@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
+import 'package:todo_list_app/styles/theme/button_styles.dart';
 import 'package:todo_list_app/widgets/main_widget.dart';
 import 'package:todo_list_app/widgets/to_do_subtitle/to_do_subtitle_widget.dart';
 import 'package:todo_list_app/widgets/to_do_title/to_do_title_widget.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ToDoListWidget extends StatelessWidget {
   const ToDoListWidget({super.key});
@@ -55,40 +57,61 @@ class _TasksListWidgetState extends State<TasksListWidget> {
           child: Container(
             height: 82,
             decoration: TaskDecoration,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 18, right: 25, top: 15, bottom: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+            child: Slidable(
+              endActionPane: ActionPane(
+                  motion: BehindMotion(),
+                  extentRatio: 0.24,
+                  children: [
+                    SlidableAction(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15)),
+                      backgroundColor: Colors.red.shade400,
+                      // foregroundColor: AppColors.LightPurple,
+                      // icon: Icons.delete,
+                      label: "Удалить",
+                      onPressed: (context) =>
+                          {context.read<Model>().deleteTask(index)},
+                    ),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
+                  ]),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, right: 25, top: 15, bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ToDoTitleWidget(
+                            title: ActiveTasks.title,
+                          ),
+                          ToDoSubtitleWidget(
+                            subtitle: ActiveTasks.subtitle,
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Row(
                       children: [
-                        ToDoTitleWidget(
-                          title: ActiveTasks.title,
+                        EditTaskButtonWidget(
+                          index: index,
                         ),
-                        ToDoSubtitleWidget(
-                          subtitle: ActiveTasks.subtitle,
+                        CloseTaskButtonWidget(
+                          index: index,
                         )
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Row(
-                    children: [
-                      EditTaskButtonWidget(
-                        index: index,
-                      ),
-                      CloseTaskButtonWidget(
-                        index: index,
-                      )
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
