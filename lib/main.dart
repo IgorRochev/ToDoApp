@@ -6,12 +6,13 @@ import 'widgets/main_widget.dart';
 import 'widgets/to_do_list/add_task/add_task_widget.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
-  await Hive.openBox('ActivesTasks9');
-  await Hive.openBox('FinishedTasks5');
+  await Hive.openBox('ActivesTasks12');
+  await Hive.openBox('FinishedTasks8');
   runApp(const ToDoApp());
 }
 
@@ -21,8 +22,10 @@ class ToDoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => Model(title: ''),
+      create: (context) => Model(title: '', dateTime: DateTime.now()),
       child: MaterialApp(
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        supportedLocales: [Locale('ru')],
         title: 'To Do App',
         theme: ThemeData(
           appBarTheme: const AppBarTheme(

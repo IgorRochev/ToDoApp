@@ -46,9 +46,11 @@ class FinishedToDoListWidget extends StatelessWidget {
                           ToDoTitleWidget(
                             title: FinishedTask.title,
                           ),
-                          ToDoSubtitleWidget(
-                            subtitle: FinishedTask.subtitle,
-                          ),
+                          if (FinishedTask.subtitle != null) ...[
+                            ToDoSubtitleWidget(
+                              subtitle: FinishedTask.subtitle,
+                            )
+                          ],
                         ],
                       ),
                     ),
