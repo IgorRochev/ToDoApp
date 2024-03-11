@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_list_app/widgets/finished_to_do_list/finished_to_do_list_widget.dart';
-import 'package:todo_list_app/widgets/to_do_list/edit_task/edit_task_widget.dart';
-import 'widgets/main_widget.dart';
-import 'widgets/to_do_list/add_task/add_task_widget.dart';
+import 'package:todo_list_app/utils/init_hive.dart';
+import 'package:todo_list_app/view_models/app_view_model.dart';
+import 'package:todo_list_app/view_models/edit_task_fields_view_model.dart';
+import 'package:todo_list_app/view_models/tasks_lists_change_view_model.dart';
+import 'package:todo_list_app/views/edit_task/edit_task_widget.dart';
+import 'views/main_screen.dart';
+import 'views/add_task/add_task_widget.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(TaskAdapter());
-  await Hive.openBox('ActivesTasks12');
-  await Hive.openBox('FinishedTasks8');
+  await initHive();
   runApp(const ToDoApp());
 }
 
@@ -21,15 +20,22 @@ class ToDoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => Model(title: '', dateTime: DateTime.now()),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AppViewModel>(create: (_) => AppViewModel()),
+        ChangeNotifierProvider<TasksListsChangeViewModel>(
+            create: (_) => TasksListsChangeViewModel(title: '')),
+        ChangeNotifierProvider<EditTaskFieldsViewModel>(
+            create: (_) => EditTaskFieldsViewModel()),
+      ],
       child: MaterialApp(
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        supportedLocales: [Locale('ru')],
+        supportedLocales: const [Locale('ru')],
         title: 'To Do App',
         theme: ThemeData(
+          useMaterial3: false,
           appBarTheme: const AppBarTheme(
-              backgroundColor: AppColors.DarkPurple,
+              backgroundColor: AppColors.darkPurple,
               toolbarHeight: 74,
               titleTextStyle: TextStyle(
                 fontSize: 24,
@@ -37,13 +43,22 @@ class ToDoApp extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               )),
         ),
+        initialRoute: '/',
         routes: {
-          '/main': (context) => const MainWidget(),
-          '/main/add_task': (context) => const AddTaskWidget(),
-          '/main/edit_task': (context) => const EditTaskWidget(),
-          '/completed': (context) => const FinishedToDoListWidget(),
+          '/': (context) => const MainScreen(),
+          '/add_task': (context) => const AddTaskWidget(),
         },
-        initialRoute: '/main',
+        onGenerateRoute: (settings) {
+          int index = settings.arguments as int;
+          var routes = <String, WidgetBuilder>{
+            "/edit_task": (ctx) => EditTaskWidget(index: index),
+          };
+          if (settings.name == '/edit_task') {
+            WidgetBuilder builder = routes[settings.name]!;
+            return MaterialPageRoute(builder: (ctx) => builder(ctx));
+          }
+          return null;
+        },
       ),
     );
   }

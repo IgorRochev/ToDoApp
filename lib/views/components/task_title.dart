@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
 
-class ToDoTitleWidget extends StatelessWidget {
+class TaskTitleWidget extends StatelessWidget {
   final String title;
 
-  const ToDoTitleWidget({
+  const TaskTitleWidget({
     super.key,
     required this.title,
   });
@@ -14,9 +14,9 @@ class ToDoTitleWidget extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-        fontSize: 13,
+        fontSize: 15,
         fontWeight: FontWeight.w600,
-        color: AppColors.DarkPurple,
+        color: AppColors.darkPurple,
         fontFamily: "Jost",
       ),
     );

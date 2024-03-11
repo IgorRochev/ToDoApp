@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ToDoSubtitleWidget extends StatelessWidget {
+class TaskSubtitleWidget extends StatelessWidget {
   final String subtitle;
 
-  const ToDoSubtitleWidget({
+  const TaskSubtitleWidget({
     super.key,
     required this.subtitle,
   });
@@ -14,8 +14,8 @@ class ToDoSubtitleWidget extends StatelessWidget {
       subtitle,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-        fontSize: 10,
+      style: const TextStyle(
+        fontSize: 12,
         fontWeight: FontWeight.w400,
         fontFamily: "Jost",
         color: Color(0xFF000000),
