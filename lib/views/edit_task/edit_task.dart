@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:todo_list_app/models/edit_task_fields_model.dart';
@@ -13,24 +12,25 @@ import 'package:todo_list_app/views/components/switch_date_button.dart';
 import 'package:todo_list_app/views/components/switch_time_button.dart';
 import 'package:todo_list_app/views/components/update_task_button.dart';
 
-class EditTaskWidget extends StatefulWidget {
+class EditTask extends StatefulWidget {
   final int index;
-  const EditTaskWidget({
+  const EditTask({
     super.key,
     required this.index,
   });
   @override
-  State<EditTaskWidget> createState() => _EditTaskWidgetState();
+  State<EditTask> createState() => _EditTaskState();
 }
 
-class _EditTaskWidgetState extends State<EditTaskWidget> {
+class _EditTaskState extends State<EditTask> {
   final _formKey = GlobalKey<FormState>();
+  late TasksListsChangeViewModel task;
 
   @override
   void initState() {
     int index = widget.index;
-    final box1 = context.read<TasksListsChangeViewModel>().activesTasks.values;
-    final activeTasks = box1.elementAt(index);
+    final box = context.read<TasksListsChangeViewModel>().activesTasks.values;
+    final activeTasks = box.elementAt(index);
     context.read<EditTaskFieldsViewModel>().init(EditTaskFieldsModel());
     context.read<EditTaskFieldsViewModel>().correctFieldsState(
         context,
@@ -44,6 +44,7 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
   @override
   Widget build(BuildContext context) {
     EditTaskFieldsViewModel editTask = context.watch<EditTaskFieldsViewModel>();
+    task = context.read<TasksListsChangeViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Редактировать задачу"),
@@ -60,13 +61,14 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                     height: 40,
                   ),
                   EditTaskTitleTextField(
-                      titleController: editTask.addTaskModel.titleController),
+                      titleController:
+                          editTask.editTaskFieldsModel.titleController),
                   const SizedBox(
                     height: 40,
                   ),
                   EditTaskDetailsTextField(
                       subtitleController:
-                          editTask.addTaskModel.subtitleController),
+                          editTask.editTaskFieldsModel.subtitleController),
                   const SizedBox(
                     height: 35,
                   ),
@@ -84,30 +86,21 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Container(
+                          child: SizedBox(
                             height: 65,
                             child: UpdateTaskButton(
                               index: widget.index,
                               formkey: _formKey,
-                              date: editTask.addTaskModel.dateGiveVerse
-                                  ? DateFormat('d.M.y')
-                                      .format(editTask.addTaskModel.currentDate)
-                                      .toString()
-                                  : null,
-                              time: editTask.addTaskModel.timeGiveVerse
-                                  ? editTask.addTaskModel.currentTime
-                                      .format(context)
-                                  : null,
                             ),
                           ),
                         ),
                         const SizedBox(
                           width: 46,
                         ),
-                        Expanded(
-                          child: Container(
+                        const Expanded(
+                          child: SizedBox(
                             height: 65,
-                            child: const CancelEditButton(),
+                            child: CancelEditButton(),
                           ),
                         ),
                       ],
@@ -118,5 +111,11 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    task.brightTaskFields();
   }
 }

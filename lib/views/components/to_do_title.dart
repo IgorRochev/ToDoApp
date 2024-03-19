@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_app/styles/theme/decorations.dart';
 import 'package:todo_list_app/utils/show_todo_title.dart';
 
-class ToDoTitleWidget extends StatelessWidget {
-  const ToDoTitleWidget({
+class ToDoTitle extends StatelessWidget {
+  const ToDoTitle({
     super.key,
     required this.dateTime,
     required this.dateTimeNow,

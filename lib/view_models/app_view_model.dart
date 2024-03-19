@@ -33,7 +33,6 @@ class AppViewModel extends ChangeNotifier {
     if (pickedDate != null && pickedDate != currentDate) {
       if (!context.mounted) return;
       context.read<AppViewModel>().updateToDoDate(pickedDate);
-      // notifyListeners();
     }
   }
 

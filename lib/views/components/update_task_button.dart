@@ -7,14 +7,10 @@ import 'package:todo_list_app/view_models/tasks_lists_change_view_model.dart';
 class UpdateTaskButton extends StatelessWidget {
   final int index;
   final formkey;
-  final date;
-  final time;
   const UpdateTaskButton({
     super.key,
     required this.index,
     this.formkey,
-    this.date,
-    this.time,
   });
 
   @override
@@ -22,8 +18,6 @@ class UpdateTaskButton extends StatelessWidget {
     final onPressed = context.read<TasksListsChangeViewModel>();
     return TextButton(
         onPressed: () {
-          context.read<TasksListsChangeViewModel>().date = date;
-          context.read<TasksListsChangeViewModel>().time = time;
           if (formkey.currentState.validate()) {
             onPressed.updateTask(context, index);
           }

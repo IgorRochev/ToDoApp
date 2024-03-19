@@ -8,12 +8,12 @@ List<Widget> showTaskDateTime(
   if (task.date != null) {
     if (task.time != null) {
       return [
-        TaskDateWidget(
+        TaskDate(
           task: task,
           listIndex: listIndex,
           pickedDateTime: pickedDateTime,
         ),
-        TaskTimeWidget(
+        TaskTime(
           task: task,
           listIndex: listIndex,
           pickedDateTime: pickedDateTime,
@@ -21,7 +21,7 @@ List<Widget> showTaskDateTime(
       ];
     }
     return [
-      TaskDateWidget(
+      TaskDate(
         task: task,
         listIndex: listIndex,
         pickedDateTime: pickedDateTime,

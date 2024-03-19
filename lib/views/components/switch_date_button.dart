@@ -27,7 +27,7 @@ class SwitchDateButton extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: !addTask.addTaskModel.dateGiveVerse
+              onPressed: !addTask.editTaskFieldsModel.dateGiveVerse
                   ? null
                   : () => addTask.selectDateToTask(context),
               child: Row(
@@ -46,10 +46,10 @@ class SwitchDateButton extends StatelessWidget {
                         "Дата",
                         style: TextStyle(color: Color(0xFF8B8787)),
                       ),
-                      if (addTask.addTaskModel.dateGiveVerse &
-                          addTask.addTaskModel.datePickerOpened) ...[
+                      if (addTask.editTaskFieldsModel.dateGiveVerse &
+                          addTask.editTaskFieldsModel.datePickerOpened) ...[
                         Text(DateFormat('d.M.y')
-                            .format(addTask.addTaskModel.currentDate)
+                            .format(addTask.editTaskFieldsModel.taskDate)
                             .toString())
                       ],
                     ],
@@ -61,7 +61,7 @@ class SwitchDateButton extends StatelessWidget {
             inactiveThumbColor: AppColors.darkPurple.withOpacity(0.6),
             activeTrackColor: const Color(0xFF8B8787).withOpacity(0.5),
             inactiveTrackColor: const Color(0xFF8B8787).withOpacity(0.4),
-            value: addTask.addTaskModel.dateGiveVerse,
+            value: addTask.editTaskFieldsModel.dateGiveVerse,
             onChanged: (bool newValue) {
               addTask.switchDate(context, newValue);
             },

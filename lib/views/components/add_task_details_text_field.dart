@@ -11,7 +11,7 @@ class AddTaskDetailsTextField extends StatelessWidget {
       padding: const EdgeInsets.only(left: 30, right: 30),
       child: TextFormField(
         onChanged: (value) =>
-            {context.read<TasksListsChangeViewModel>().subtitle = value},
+            {context.read<TasksListsChangeViewModel>().task.subtitle = value},
         decoration: const InputDecoration(
             label: Text("Подробности"),
             labelStyle: TextStyle(color: Color(0xFF8B8787)),

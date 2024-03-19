@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/models/task_model.dart';
 import 'package:todo_list_app/styles/theme/decorations.dart';
 import 'package:todo_list_app/utils/show_task_datetime.dart';
 import 'package:todo_list_app/utils/show_task_subtitle.dart';
@@ -9,8 +10,8 @@ import 'package:todo_list_app/views/components/task_title.dart';
 import 'package:todo_list_app/views/components/close_task_button.dart';
 import 'package:todo_list_app/views/components/edit_task_button.dart';
 
-class TaskWidget extends StatelessWidget {
-  const TaskWidget({
+class Task extends StatelessWidget {
+  const Task({
     super.key,
     required this.task,
     required this.pickedDateTime,
@@ -20,7 +21,7 @@ class TaskWidget extends StatelessWidget {
   });
   final int taskIndex;
   final int listIndex;
-  final task;
+  final TaskModel task;
   final int index;
   final DateTime pickedDateTime;
 
@@ -62,7 +63,7 @@ class TaskWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TaskTitleWidget(
+                      TaskTitle(
                         title: task.title,
                       ),
                       ...showTaskSubTitle(task.subtitle),
@@ -79,10 +80,10 @@ class TaskWidget extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    EditTaskButtonWidget(
+                    EditTaskButton(
                       index: taskIndex,
                     ),
-                    CloseTaskButtonWidget(
+                    CloseTaskButton(
                       index: taskIndex,
                     )
                   ],

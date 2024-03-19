@@ -26,7 +26,7 @@ class SwitchTimeButton extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: !addTask.addTaskModel.timeGiveVerse
+              onPressed: !addTask.editTaskFieldsModel.timeGiveVerse
                   ? null
                   : () => addTask.selectTimeToTask(context),
               child: Row(
@@ -45,9 +45,10 @@ class SwitchTimeButton extends StatelessWidget {
                         "Время",
                         style: TextStyle(color: Color(0xFF8B8787)),
                       ),
-                      if (addTask.addTaskModel.timeGiveVerse &
-                          addTask.addTaskModel.timePickerOpened) ...[
-                        Text(addTask.addTaskModel.currentTime.format(context))
+                      if (addTask.editTaskFieldsModel.timeGiveVerse &
+                          addTask.editTaskFieldsModel.timePickerOpened) ...[
+                        Text(addTask.editTaskFieldsModel.taskTime
+                            .format(context))
                       ],
                     ],
                   ),
@@ -58,7 +59,7 @@ class SwitchTimeButton extends StatelessWidget {
             inactiveThumbColor: AppColors.darkPurple.withOpacity(0.6),
             activeTrackColor: const Color(0xFF8B8787).withOpacity(0.5),
             inactiveTrackColor: const Color(0xFF8B8787).withOpacity(0.4),
-            value: addTask.addTaskModel.timeGiveVerse,
+            value: addTask.editTaskFieldsModel.timeGiveVerse,
             onChanged: (bool newValue) {
               addTask.switchTime(context, newValue);
             },

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
 
-class EditTaskButtonWidget extends StatefulWidget {
-  const EditTaskButtonWidget({
+class EditTaskButton extends StatefulWidget {
+  const EditTaskButton({
     super.key,
     required this.index,
   });
   final int index;
 
   @override
-  State<EditTaskButtonWidget> createState() => _EditTaskButtonWidgetState();
+  State<EditTaskButton> createState() => _EditTaskButtonState();
 }
 
-class _EditTaskButtonWidgetState extends State<EditTaskButtonWidget> {
+class _EditTaskButtonState extends State<EditTaskButton> {
   @override
   Widget build(BuildContext context) {
     return IconButton(

@@ -6,34 +6,34 @@ import 'package:todo_list_app/view_models/tasks_lists_change_view_model.dart';
 import 'package:todo_list_app/views/components/task.dart';
 import 'package:todo_list_app/views/components/to_do_title.dart';
 
-class ToDoListWidget extends StatelessWidget {
-  const ToDoListWidget({super.key, required this.listIndex});
+class ToDoList extends StatelessWidget {
+  const ToDoList({super.key, required this.listIndex});
   final int listIndex;
   @override
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFFD6D7EF),
       child: Stack(alignment: Alignment.bottomRight, children: [
-        TasksListWidget(
+        TasksList(
           listIndex: listIndex,
         ),
-        const AddTaskButtonWidget(),
+        const AddTaskButton(),
       ]),
     );
   }
 }
 
-class TasksListWidget extends StatefulWidget {
-  const TasksListWidget({
+class TasksList extends StatefulWidget {
+  const TasksList({
     super.key,
     required this.listIndex,
   });
   final int listIndex;
   @override
-  State<TasksListWidget> createState() => _TasksListWidgetState();
+  State<TasksList> createState() => _TasksListState();
 }
 
-class _TasksListWidgetState extends State<TasksListWidget> {
+class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
     final pickedDateTime = context.watch<AppViewModel>().fetchToDoDate;
@@ -41,7 +41,7 @@ class _TasksListWidgetState extends State<TasksListWidget> {
     Map<int, TaskModel> tasks = {};
     context
         .read<TasksListsChangeViewModel>()
-        .filteringTasks(context, pickedDateTime, tasks);
+        .sortTasks(context, pickedDateTime, tasks);
 
     return Stack(
       children: [
@@ -51,7 +51,7 @@ class _TasksListWidgetState extends State<TasksListWidget> {
           itemBuilder: (BuildContext context, int index) {
             final task = tasks.values.elementAt(index);
             final taskIndex = tasks.keys.elementAt(index);
-            return TaskWidget(
+            return Task(
               task: task,
               pickedDateTime: pickedDateTime,
               index: index,
@@ -60,14 +60,14 @@ class _TasksListWidgetState extends State<TasksListWidget> {
             );
           },
         ),
-        ToDoTitleWidget(dateTime: pickedDateTime, dateTimeNow: dateTimeNow)
+        ToDoTitle(dateTime: pickedDateTime, dateTimeNow: dateTimeNow)
       ],
     );
   }
 }
 
-class AddTaskButtonWidget extends StatelessWidget {
-  const AddTaskButtonWidget({
+class AddTaskButton extends StatelessWidget {
+  const AddTaskButton({
     super.key,
   });
 

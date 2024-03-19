@@ -8,27 +8,17 @@ class TasksListsChangeViewModel extends ChangeNotifier {
   final _finishedTasks = Hive.box('FinishedTasks15');
   TaskModel _task = TaskModel('', null, null, null);
 
-  String title;
-  String? subtitle;
-  String? date;
-  String? time;
-
   get finishedTasks => _finishedTasks;
   get activesTasks => _activesTasks;
   TaskModel get task => _task;
 
-  TasksListsChangeViewModel({
-    required this.title,
-    this.subtitle,
-    this.date,
-    this.time,
-  });
+  TasksListsChangeViewModel();
 
   void brightTaskFields() {
     _task = TaskModel('', null, null, null);
   }
 
-  void filteringTasks(BuildContext context, DateTime pickedDateTime,
+  void sortTasks(BuildContext context, DateTime pickedDateTime,
       Map<int, TaskModel> tasks) {
     final unsortedTasks =
         context.watch<TasksListsChangeViewModel>()._activesTasks.values;
@@ -74,8 +64,7 @@ class TasksListsChangeViewModel extends ChangeNotifier {
   }
 
   void addTask(BuildContext context) async {
-    final task = TaskModel(title, subtitle, date, time);
-    await _activesTasks.add(task);
+    await _activesTasks.add(_task);
     notifyListeners();
     if (context.mounted) {
       Navigator.of(context).pop();
@@ -83,7 +72,7 @@ class TasksListsChangeViewModel extends ChangeNotifier {
   }
 
   void updateTask(BuildContext context, int index) async {
-    _activesTasks.putAt(index, TaskModel(title, subtitle, date, time));
+    _activesTasks.putAt(index, _task);
     notifyListeners();
     if (context.mounted) {
       Navigator.of(context).pop();

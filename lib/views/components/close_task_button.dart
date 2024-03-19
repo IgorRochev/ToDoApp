@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
 import 'package:todo_list_app/view_models/tasks_lists_change_view_model.dart';
 
-class CloseTaskButtonWidget extends StatelessWidget {
-  const CloseTaskButtonWidget({
+class CloseTaskButton extends StatelessWidget {
+  const CloseTaskButton({
     super.key,
     required this.index,
   });

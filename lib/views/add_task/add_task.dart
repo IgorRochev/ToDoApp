@@ -22,15 +22,17 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
   @override
   void initState() {
     super.initState();
-    context.read<TasksListsChangeViewModel>().subtitle = null;
-    context.read<TasksListsChangeViewModel>().date = null;
-    context.read<TasksListsChangeViewModel>().time = null;
+    // context.read<TasksListsChangeViewModel>().subtitle = null;
+    // context.read<TasksListsChangeViewModel>().date = null;
+    // context.read<TasksListsChangeViewModel>().time = null;
     context.read<EditTaskFieldsViewModel>().init(EditTaskFieldsModel());
   }
 
+  late TasksListsChangeViewModel task;
   @override
   Widget build(BuildContext context) {
     EditTaskFieldsViewModel addTask = context.watch<EditTaskFieldsViewModel>();
+    task = context.read<TasksListsChangeViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Новая задача"),
@@ -79,7 +81,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   @override
   void dispose() {
-    // context.watch<TasksListsChangeViewModel>().brightTaskFields();
+    task.brightTaskFields();
+    // context.read<TasksListsChangeViewModel>().brightTaskFields();
     super.dispose();
   }
 }

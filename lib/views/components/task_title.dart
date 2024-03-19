@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
 
-class TaskTitleWidget extends StatelessWidget {
+class TaskTitle extends StatelessWidget {
   final String title;
 
-  const TaskTitleWidget({
+  const TaskTitle({
     super.key,
     required this.title,
   });

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class TaskSubtitleWidget extends StatelessWidget {
+class TaskSubtitle extends StatelessWidget {
   final String subtitle;
 
-  const TaskSubtitleWidget({
+  const TaskSubtitle({
     super.key,
     required this.subtitle,
   });

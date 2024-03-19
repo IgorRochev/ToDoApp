@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/models/task_model.dart';
 import 'package:todo_list_app/utils/show_task_overdue.dart';
 
-class TaskTimeWidget extends StatelessWidget {
-  const TaskTimeWidget({
+class TaskTime extends StatelessWidget {
+  const TaskTime({
     super.key,
     required this.task,
     this.pickedDateTime,
@@ -10,7 +11,7 @@ class TaskTimeWidget extends StatelessWidget {
   });
 
   final int listIndex;
-  final task;
+  final TaskModel task;
   final DateTime? pickedDateTime;
 
   @override

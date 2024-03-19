@@ -27,7 +27,7 @@ class _SelectDateForToDoListState extends State<SelectDateForToDoList> {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               width: 60,
               height: 60,
               child: Stack(

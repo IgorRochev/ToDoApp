@@ -37,7 +37,7 @@ class FinishedToDoList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TaskTitleWidget(
+                          TaskTitle(
                             title: finishedTask.title,
                           ),
                           ...showTaskSubTitle(finishedTask.subtitle),

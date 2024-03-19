@@ -6,80 +6,84 @@ import 'package:todo_list_app/view_models/tasks_lists_change_view_model.dart';
 
 class EditTaskFieldsViewModel extends ChangeNotifier {
   EditTaskFieldsViewModel();
-  EditTaskFieldsModel _addTaskModel = EditTaskFieldsModel();
-  EditTaskFieldsModel get addTaskModel => _addTaskModel;
+  EditTaskFieldsModel _editTaskFieldsModel = EditTaskFieldsModel();
+  EditTaskFieldsModel get editTaskFieldsModel => _editTaskFieldsModel;
 
-  void init(EditTaskFieldsModel addTaskModel) {
-    _addTaskModel = addTaskModel;
+  void init(EditTaskFieldsModel editTaskFieldsModel) {
+    _editTaskFieldsModel = editTaskFieldsModel;
   }
 
   void correctFieldsState(BuildContext context, String? date, String? time,
       String title, String? subtitle) {
     bool toCorrectDate = (date != null) ? true : false;
-    addTaskModel.dateGiveVerse = toCorrectDate;
-    addTaskModel.datePickerOpened = toCorrectDate;
-    addTaskModel.currentDate = (toCorrectDate)
+    editTaskFieldsModel.dateGiveVerse = toCorrectDate;
+    editTaskFieldsModel.datePickerOpened = toCorrectDate;
+    editTaskFieldsModel.taskDate = (toCorrectDate)
         ? DateTime(int.parse(date.split(".")[2]), int.parse(date.split(".")[1]),
             int.parse(date.split(".")[0]))
         : DateTime.now();
     bool toCorrectTime = (time != null) ? true : false;
-    addTaskModel.timeGiveVerse = toCorrectTime;
-    addTaskModel.timePickerOpened = toCorrectTime;
-    addTaskModel.currentTime = (time != null)
+    editTaskFieldsModel.timeGiveVerse = toCorrectTime;
+    editTaskFieldsModel.timePickerOpened = toCorrectTime;
+    editTaskFieldsModel.taskTime = (time != null)
         ? TimeOfDay(
             hour: int.parse(time.split(":")[0]),
             minute: int.parse(time.split(":")[1]))
         : TimeOfDay.now();
-    addTaskModel.titleController.addListener(() => context
+    editTaskFieldsModel.titleController.addListener(() => context
         .read<TasksListsChangeViewModel>()
-        .title = addTaskModel.titleController.text);
-    addTaskModel.subtitleController.addListener(() => context
+        .task
+        .title = editTaskFieldsModel.titleController.text);
+    editTaskFieldsModel.subtitleController.addListener(() => context
         .read<TasksListsChangeViewModel>()
-        .subtitle = addTaskModel.subtitleController.text);
-    addTaskModel.titleController.text = title;
-    addTaskModel.subtitleController.text = subtitle ?? '';
-    // notifyListeners();
+        .task
+        .subtitle = editTaskFieldsModel.subtitleController.text);
+    editTaskFieldsModel.titleController.text = title;
+    editTaskFieldsModel.subtitleController.text = subtitle ?? '';
+    context.read<TasksListsChangeViewModel>().task.date = date;
+    context.read<TasksListsChangeViewModel>().task.time = time;
   }
 
   Future<void> selectDateToTask(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: addTaskModel.currentDate,
+      initialDate: editTaskFieldsModel.taskDate,
       firstDate: DateTime.now(),
       lastDate: DateTime(2050),
       locale: const Locale('ru'),
     );
-    addTaskModel.datePickerOpened = addTaskModel.dateGiveVerse;
+    editTaskFieldsModel.datePickerOpened = editTaskFieldsModel.dateGiveVerse;
     notifyListeners();
-    if (pickedDate != null && pickedDate != addTaskModel.currentDate) {
-      addTaskModel.currentDate = pickedDate;
+    if (pickedDate != null && pickedDate != editTaskFieldsModel.taskDate) {
+      editTaskFieldsModel.taskDate = pickedDate;
       if (!context.mounted) return;
-      context.read<TasksListsChangeViewModel>().date =
-          DateFormat('d.M.y').format(addTaskModel.currentDate).toString();
+      context.read<TasksListsChangeViewModel>().task.date =
+          DateFormat('d.M.y').format(editTaskFieldsModel.taskDate).toString();
       notifyListeners();
     }
   }
 
   void switchDate(BuildContext context, bool newValue) {
-    addTaskModel.dateGiveVerse = newValue;
+    editTaskFieldsModel.dateGiveVerse = newValue;
     notifyListeners();
-    if (addTaskModel.dateGiveVerse) {
-      context.read<TasksListsChangeViewModel>().date =
-          DateFormat('d.M.y').format(addTaskModel.currentDate).toString(); //??
+    if (editTaskFieldsModel.dateGiveVerse) {
+      context.read<TasksListsChangeViewModel>().task.date = DateFormat('d.M.y')
+          .format(editTaskFieldsModel.taskDate)
+          .toString(); //??
     } else {
-      addTaskModel.currentDate = DateTime.now();
-      context.read<TasksListsChangeViewModel>().date = null;
-      if (addTaskModel.timeGiveVerse) {
-        addTaskModel.timeGiveVerse = false;
-        addTaskModel.timePickerOpened = false;
-        addTaskModel.currentTime = TimeOfDay.now();
-        context.read<TasksListsChangeViewModel>().time = null;
+      editTaskFieldsModel.taskDate = DateTime.now();
+      context.read<TasksListsChangeViewModel>().task.date = null;
+      if (editTaskFieldsModel.timeGiveVerse) {
+        editTaskFieldsModel.timeGiveVerse = false;
+        editTaskFieldsModel.timePickerOpened = false;
+        editTaskFieldsModel.taskTime = TimeOfDay.now();
+        context.read<TasksListsChangeViewModel>().task.time = null;
       }
     }
     notifyListeners();
-    if (!addTaskModel.dateGiveVerse) {
-      addTaskModel.datePickerOpened = addTaskModel.dateGiveVerse;
-      context.read<TasksListsChangeViewModel>().date = null; //??
+    if (!editTaskFieldsModel.dateGiveVerse) {
+      editTaskFieldsModel.datePickerOpened = editTaskFieldsModel.dateGiveVerse;
+      context.read<TasksListsChangeViewModel>().task.date = null; //??
       notifyListeners();
       return;
     }
@@ -97,38 +101,41 @@ class EditTaskFieldsViewModel extends ChangeNotifier {
           );
         },
         context: context,
-        initialTime: addTaskModel.currentTime,
+        initialTime: editTaskFieldsModel.taskTime,
         initialEntryMode: TimePickerEntryMode.inputOnly);
     if (pickedTime != null) {
-      addTaskModel.currentTime = pickedTime;
+      editTaskFieldsModel.taskTime = pickedTime;
       notifyListeners();
       if (!context.mounted) return;
-      context.read<TasksListsChangeViewModel>().time =
-          addTaskModel.currentTime.format(context);
+      context.read<TasksListsChangeViewModel>().task.time =
+          editTaskFieldsModel.taskTime.format(context);
       notifyListeners();
     }
   }
 
   void switchTime(BuildContext context, bool newValue) {
-    addTaskModel.timeGiveVerse = newValue;
+    editTaskFieldsModel.timeGiveVerse = newValue;
     notifyListeners();
-    if (addTaskModel.timeGiveVerse) {
-      context.read<TasksListsChangeViewModel>().time =
-          addTaskModel.currentTime.format(context);
-      if (!addTaskModel.dateGiveVerse) {
-        addTaskModel.dateGiveVerse = true;
-        addTaskModel.datePickerOpened = addTaskModel.dateGiveVerse;
-        context.read<TasksListsChangeViewModel>().date =
-            DateFormat('d.M.y').format(addTaskModel.currentDate).toString(); //?
+    if (editTaskFieldsModel.timeGiveVerse) {
+      context.read<TasksListsChangeViewModel>().task.time =
+          editTaskFieldsModel.taskTime.format(context);
+      if (!editTaskFieldsModel.dateGiveVerse) {
+        editTaskFieldsModel.dateGiveVerse = true;
+        editTaskFieldsModel.datePickerOpened =
+            editTaskFieldsModel.dateGiveVerse;
+        context.read<TasksListsChangeViewModel>().task.date =
+            DateFormat('d.M.y')
+                .format(editTaskFieldsModel.taskDate)
+                .toString(); //?
       }
     } else {
-      addTaskModel.currentTime = TimeOfDay.now();
-      context.read<TasksListsChangeViewModel>().time = null;
+      editTaskFieldsModel.taskTime = TimeOfDay.now();
+      context.read<TasksListsChangeViewModel>().task.time = null;
     }
     notifyListeners();
-    if (!addTaskModel.timeGiveVerse) {
-      addTaskModel.timePickerOpened = addTaskModel.timeGiveVerse;
-      context.read<TasksListsChangeViewModel>().time = null; //??
+    if (!editTaskFieldsModel.timeGiveVerse) {
+      editTaskFieldsModel.timePickerOpened = editTaskFieldsModel.timeGiveVerse;
+      context.read<TasksListsChangeViewModel>().task.time = null; //??
       notifyListeners();
       return;
     }
@@ -136,7 +143,7 @@ class EditTaskFieldsViewModel extends ChangeNotifier {
       selectTimeToTask(context);
     });
     Future.delayed(const Duration(milliseconds: 400), () {
-      addTaskModel.timePickerOpened = addTaskModel.timeGiveVerse;
+      editTaskFieldsModel.timePickerOpened = editTaskFieldsModel.timeGiveVerse;
       notifyListeners();
     });
   }
