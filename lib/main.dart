@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_list_app/services/local_notification_service.dart';
 import 'package:todo_list_app/utils/init_hive.dart';
 import 'package:todo_list_app/view_models/app_view_model.dart';
 import 'package:todo_list_app/view_models/edit_task_fields_view_model.dart';
@@ -10,16 +9,10 @@ import 'views/main_screen.dart';
 import 'views/add_task/add_task.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initHive();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  LocalNotificationService.initialize();
   runApp(const ToDoApp());
 }
 
