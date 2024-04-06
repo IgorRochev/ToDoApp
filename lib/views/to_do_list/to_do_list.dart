@@ -54,7 +54,6 @@ class _TasksListState extends State<TasksList> {
             return Task(
               task: task,
               pickedDateTime: pickedDateTime,
-              index: index,
               listIndex: widget.listIndex,
               taskIndex: taskIndex,
             );

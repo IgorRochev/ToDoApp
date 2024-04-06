@@ -4,26 +4,23 @@ import 'package:provider/provider.dart';
 import 'package:todo_list_app/models/task_model.dart';
 import 'package:todo_list_app/styles/theme/decorations.dart';
 import 'package:todo_list_app/utils/show_task_datetime.dart';
+import 'package:todo_list_app/utils/show_task_edit_and_close_buttons.dart';
 import 'package:todo_list_app/utils/show_task_subtitle.dart';
 import 'package:todo_list_app/view_models/tasks_lists_change_view_model.dart';
 import 'package:todo_list_app/views/components/task_title.dart';
-import 'package:todo_list_app/views/components/close_task_button.dart';
-import 'package:todo_list_app/views/components/edit_task_button.dart';
 
 class Task extends StatelessWidget {
   const Task({
     super.key,
     required this.task,
-    required this.pickedDateTime,
-    required this.index,
+    this.pickedDateTime,
     required this.listIndex,
     required this.taskIndex,
   });
   final int taskIndex;
   final int listIndex;
   final TaskModel task;
-  final int index;
-  final DateTime pickedDateTime;
+  final DateTime? pickedDateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +42,9 @@ class Task extends StatelessWidget {
                   backgroundColor: Colors.red.shade400,
                   label: "Удалить",
                   onPressed: (context) => {
-                    context.read<TasksListsChangeViewModel>().deleteTask(
-                          taskIndex,
-                        )
+                    context
+                        .read<TasksListsChangeViewModel>()
+                        .deleteTask(taskIndex, listIndex)
                   },
                 ),
               ]),
@@ -80,12 +77,7 @@ class Task extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    EditTaskButton(
-                      index: taskIndex,
-                    ),
-                    CloseTaskButton(
-                      index: taskIndex,
-                    )
+                    ...showTaskEditAndCloseButtons(listIndex, taskIndex),
                   ],
                 ),
               ],

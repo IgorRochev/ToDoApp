@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/models/task_model.dart';
+import 'package:todo_list_app/utils/constants.dart';
 
 class TasksListsChangeViewModel extends ChangeNotifier {
-  final _activesTasks = Hive.box('ActivesTasks19');
-  final _finishedTasks = Hive.box('FinishedTasks15');
+  final _activesTasks = Hive.box('ActivesTasks23');
+  final _finishedTasks = Hive.box('FinishedTasks19');
   TaskModel _task = TaskModel('', null, null, null);
 
   get finishedTasks => _finishedTasks;
@@ -86,8 +87,13 @@ class TasksListsChangeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTask(int index) {
-    _activesTasks.deleteAt(index);
+  void deleteTask(int index, int listIndex) {
+    if (listIndex == toDoListIndex) {
+      _activesTasks.deleteAt(index);
+    } else {
+      _finishedTasks.deleteAt(index);
+    }
+
     notifyListeners();
   }
 }
