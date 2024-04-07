@@ -11,4 +11,9 @@ abstract class ButtonsStyles {
     fontWeight: FontWeight.w600,
     fontFamily: "Jost",
   ));
+  static const clearWindowButtonsTextStyle = MaterialStatePropertyAll(TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Jost",
+  ));
 }

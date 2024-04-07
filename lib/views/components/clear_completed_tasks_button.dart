@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/views/components/clear_completed_tasks_dialog.dart';
 
 class ClearCompletedTasksButton extends StatelessWidget {
   const ClearCompletedTasksButton({super.key});
@@ -14,7 +15,7 @@ class ClearCompletedTasksButton extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               )),
               overlayColor: MaterialStateProperty.all(Colors.transparent)),
-          onPressed: () => {},
+          onPressed: () => {clearTasksDialog(context)},
           child: const Text(
             'Очистить',
           )),
