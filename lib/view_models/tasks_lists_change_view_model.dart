@@ -96,4 +96,12 @@ class TasksListsChangeViewModel extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void clearCompletedTasks(BuildContext context) async {
+    await _finishedTasks.clear();
+    notifyListeners();
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
+  }
 }
