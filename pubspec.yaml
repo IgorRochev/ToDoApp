@@ -1,7 +1,7 @@
 name: todo_list_app
-description: A new Flutter project.
+description: To do list application.
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: '>=3.1.1 <4.0.0'
@@ -25,6 +25,12 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   hive_generator: ^2.0.1
   build_runner: ^2.4.7
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  image_path: "icons/app_logo.png"
+  android: true
+  ios: true
 
 flutter:
   uses-material-design: true
