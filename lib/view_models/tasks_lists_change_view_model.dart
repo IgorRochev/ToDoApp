@@ -5,9 +5,9 @@ import 'package:todo_list_app/models/task_model.dart';
 import 'package:todo_list_app/utils/constants.dart';
 
 class TasksListsChangeViewModel extends ChangeNotifier {
-  final _activesTasks = Hive.box('ActivesTasks');
-  final _finishedTasks = Hive.box('FinishedTasks');
-  TaskModel _task = TaskModel('', null, null, null);
+  final _activesTasks = Hive.box('ActivesTasks26');
+  final _finishedTasks = Hive.box('FinishedTasks26');
+  TaskModel _task = TaskModel('', null, null, null, null);
 
   get finishedTasks => _finishedTasks;
   get activesTasks => _activesTasks;
@@ -16,7 +16,7 @@ class TasksListsChangeViewModel extends ChangeNotifier {
   TasksListsChangeViewModel();
 
   void brightTaskFields() {
-    _task = TaskModel('', null, null, null);
+    _task = TaskModel('', null, null, null, null);
   }
 
   void sortTasks(BuildContext context, DateTime pickedDateTime,

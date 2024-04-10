@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/styles/theme/app_colors.dart';
+import 'package:todo_list_app/view_models/edit_task_fields_view_model.dart';
 
 class PickImageButton extends StatelessWidget {
-  const PickImageButton({super.key});
+  final EditTaskFieldsViewModel addTask;
+  const PickImageButton({super.key, required this.addTask});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class PickImageButton extends StatelessWidget {
               ),
             ),
           ),
-          onPressed: () {},
+          onPressed: () => {addTask.pickImageToTask(context)},
           child: const Row(
             children: [
               Icon(

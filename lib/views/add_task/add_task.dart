@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/models/edit_task_fields_model.dart';
 import 'package:todo_list_app/view_models/edit_task_fields_view_model.dart';
@@ -5,6 +7,7 @@ import 'package:todo_list_app/view_models/tasks_lists_change_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/views/components/add_task_button.dart';
 import 'package:todo_list_app/views/components/add_task_details_text_field.dart';
+import 'package:todo_list_app/views/components/pick_image_button.dart';
 import 'package:todo_list_app/views/components/switch_date_button.dart';
 import 'package:todo_list_app/views/components/switch_time_button.dart';
 import 'package:todo_list_app/views/components/add_task_title_text_field.dart';
@@ -33,6 +36,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
   Widget build(BuildContext context) {
     EditTaskFieldsViewModel addTask = context.watch<EditTaskFieldsViewModel>();
     task = context.read<TasksListsChangeViewModel>();
+    Uint8List? imageBytes =
+        context.read<TasksListsChangeViewModel>().task.imageBytes;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Новая задача"),
@@ -64,6 +69,17 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   const SizedBox(
                     height: 35,
                   ),
+                  PickImageButton(
+                    addTask: addTask,
+                  ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  if (imageBytes != null) ...[
+                    Image.memory(
+                      imageBytes,
+                    )
+                  ],
                   Container(
                     width: double.infinity,
                     height: 65,

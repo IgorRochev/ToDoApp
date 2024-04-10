@@ -31,6 +31,7 @@ class _EditTaskState extends State<EditTask> {
     int index = widget.index;
     final box = context.read<TasksListsChangeViewModel>().activesTasks.values;
     final activeTasks = box.elementAt(index);
+    // print(activeTasks.imageBytes);
     context.read<EditTaskFieldsViewModel>().init(EditTaskFieldsModel());
     context.read<EditTaskFieldsViewModel>().correctFieldsState(
         context,
@@ -45,6 +46,7 @@ class _EditTaskState extends State<EditTask> {
   Widget build(BuildContext context) {
     EditTaskFieldsViewModel editTask = context.watch<EditTaskFieldsViewModel>();
     task = context.read<TasksListsChangeViewModel>();
+    // print(task.task.imageBytes);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Редактировать задачу"),
@@ -80,6 +82,9 @@ class _EditTaskState extends State<EditTask> {
                   const SizedBox(
                     height: 40,
                   ),
+                  // if (task.task.imageBytes != null) ...[
+                  //   Image.memory(task.task.imageBytes![0])
+                  // ],
                   Padding(
                     padding: const EdgeInsets.only(left: 14, right: 14),
                     child: Row(

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:hive/hive.dart';
 
 @HiveType(typeId: 0)
@@ -14,7 +16,9 @@ class TaskModel {
   @HiveField(3)
   String? time;
 
-  TaskModel(this.title, this.subtitle, this.date, this.time);
+  Uint8List? imageBytes;
+
+  TaskModel(this.title, this.subtitle, this.date, this.time, this.imageBytes);
 }
 
 class TaskModelAdapter extends TypeAdapter<TaskModel> {
@@ -27,7 +31,9 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
     final subtitle = reader.read();
     final date = reader.read();
     final time = reader.read();
-    return TaskModel(title, subtitle, date, time);
+    final imageBytes = reader.read();
+    // final imageBytes = reader.readByteList();
+    return TaskModel(title, subtitle, date, time, imageBytes);
   }
 
   @override
@@ -36,5 +42,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
     writer.write(obj.subtitle);
     writer.write(obj.date);
     writer.write(obj.time);
+    // writer.write(value);
+    writer.write(obj.imageBytes);
   }
 }

@@ -1,8 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/models/edit_task_fields_model.dart';
 import 'package:todo_list_app/view_models/tasks_lists_change_view_model.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditTaskFieldsViewModel extends ChangeNotifier {
   EditTaskFieldsViewModel();
@@ -146,5 +149,18 @@ class EditTaskFieldsViewModel extends ChangeNotifier {
       editTaskFieldsModel.timePickerOpened = editTaskFieldsModel.timeGiveVerse;
       notifyListeners();
     });
+  }
+
+  Future<void> pickImageToTask(BuildContext context) async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedFile == null) return;
+
+    Uint8List imageBytes = await pickedFile.readAsBytes();
+    
+    if (!context.mounted) return;
+    context.read<TasksListsChangeViewModel>().task.imageBytes = imageBytes;
+    notifyListeners();
   }
 }
