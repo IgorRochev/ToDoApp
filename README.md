@@ -10,3 +10,5 @@
 
 https://github.com/IgorRochev/ToDoApp/assets/79505122/fa801b89-f95b-48d1-a7b6-34f8dc34741b
 
+
+https://www.figma.com/file/wVqqj7BAHjYfc4NBtdpMzI/LOW-CODE-TODO-LIST-APP-AESTHETIC-(Community)?type=design&node-id=0-1&mode=design&t=je4WHgjTeW0gYMMe-0
